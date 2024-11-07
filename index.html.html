@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz d'Accès</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.ibb.co/ZxgdPDJ/fond-page-3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quiz-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 90%;
+            color: white;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .hidden { display: none; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .red-text { color: red; }
+        #secretLink {
+            color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Bienvenue! Utilise la bonne clé pour chacune des 3 portes et un chemin te sera donné.</h1>
+        <p class="red-text">Sers-toi des secrets cachés au sein de l'invitation mystique.</p>
+        
+        <form id="quizForm">
+            <label for="q1">Question 1: Quel jour de l'an révèle le mystère d'un évènement mémorable ?</label><br>
+            <input type="text" id="q1" placeholder="format JJ.MM.AA"><br><br>
+
+            <label for="q2">Question 2: Où, dans l'écrin du monde, se cache l'endroit où le secret prendra vie ?</label><br>
+            <input type="text" id="q2" placeholder="Entrez votre réponse ici"><br><br>
+
+            <label for="q3">Question 3: Quel rite, dissimulé sous le voile, attend d'être révélé dans l'éclat de cet instant ?</label><br>
+            <input type="text" id="q3" placeholder="Entrez votre réponse ici"><br><br>
+
+            <button type="submit">Soumettre</button>
+        </form>
+
+        <div id="result" class="hidden"></div>
+        <a id="secretLink" class="hidden" href="https://www.facebook.com/groups/hierogamos">Voici votre lien secret !</a>
+    </div>
+
+    <script>
+        document.getElementById("quizForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const q1 = document.getElementById("q1").value.trim().toLowerCase();
+            const q2 = document.getElementById("q2").value.trim().toLowerCase();
+            const q3 = document.getElementById("q3").value.trim().toLowerCase();
+            const result = document.getElementById("result");
+            const secretLink = document.getElementById("secretLink");
+
+            // Définitions des réponses acceptables pour chaque question
+            const answersQ1 = ["13.09.25", "13/09/25"];
+            const answersQ2 = ["boyer", "moulin de la canne"];
+            const answersQ3 = ["hierogamos"];
+
+            // Vérification des réponses
+            let feedback = [];
+            if (!answersQ1.includes(q1)) {
+                feedback.push("La réponse à la question 1 est incorrecte.");
+            }
+            if (!answersQ2.includes(q2)) {
+                feedback.push("La réponse à la question 2 est incorrecte.");
+            }
+            if (!answersQ3.includes(q3)) {
+                feedback.push("La réponse à la question 3 est incorrecte.");
+            }
+
+            // Affichage des résultats
+            if (feedback.length === 0) {
+                result.textContent = "Toutes les réponses sont correctes !";
+                result.classList.add("correct");
+                result.classList.remove("hidden", "incorrect");
+                secretLink.classList.remove("hidden");
+            } else {
+                result.textContent = "Certaines réponses sont incorrectes : " + feedback.join(" ");
+                result.classList.add("incorrect");
+                result.classList.remove("hidden", "correct");
+                secretLink.classList.add("hidden");
+            }
+        });
+    </script>
+</body>
+</html>
